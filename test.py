@@ -66,6 +66,7 @@ while not done:
 #End while - end of game loop
 
 pygame.quit()
+edit
 
 
 
