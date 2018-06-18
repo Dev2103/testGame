@@ -46,7 +46,10 @@ while not done:
     x_val = x_val + x_direction
     y_val = y_val + y_direction
     sun_x = sun_x + 5
-    if 
+    if x_val == 620: x_direction = x_direction * -1
+    if y_val == 460: y_direction = y_direction * -1
+    if x_val == 0: x_direction = x_direction * -1
+    if y_val == 0: y_direction = y_direction * -1
     # -- screen background is black
 
     screen.fill(BLACK)
@@ -61,12 +64,12 @@ while not done:
 
     # -- the clock ticks over
 
-    clock.tick(60)
+    clock.tick(200)
 
 #End while - end of game loop
 
 pygame.quit()
-edit
+
 
 
 
