@@ -32,6 +32,8 @@ x_val = 150
 y_val = 200
 x_direction = 1
 y_direction = 1
+x_padd = 0
+y_padd = 220
 ### -- Game Loop
 while not done:
     # -- User input and controls
@@ -40,7 +42,19 @@ while not done:
             if event.type == pygame.QUIT:
                 done = true
             #End if
-    #Next event
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    # - write logic that happens when you press the key
+                    y_padd = y_padd - 20
+
+                elif event.key == pygame.K_DOWN:
+                    # - write logic that happens on key press here
+
+                    y_padd = y_padd + 20    
+                    #END If
+                        
+                #END If
+            #Next event
 
     # -- Game logic goes after this comment
     x_val = x_val + x_direction
@@ -57,6 +71,7 @@ while not done:
     # -- Draw here
 
     pygame.draw.rect(screen, BLUE, (x_val,y_val, ball_width,ball_width))
+    pygame.draw.rect(screen, WHITE, (x_padd,y_padd,15,60))
 
     # -- flip display to reveal new positions of objects
 
