@@ -37,7 +37,11 @@ y_padd = 220
 ### -- Game Loop
 while not done:
     # -- User input and controls
-
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP]:
+            y_padd = y_padd - 1
+    if keys[pygame.K_DOWN]:
+            y_padd = y_padd + 1
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = true
@@ -66,6 +70,10 @@ while not done:
     if y_val == 0: y_direction = y_direction * -1
     # -- screen background is black
 
+    #condition to hit paddle
+    if x_val < 15 and y_val > y_padd and y_val < y_padd + 65:
+        x_direction = x_direction * -1
+    
     screen.fill(BLACK)
 
     # -- Draw here
