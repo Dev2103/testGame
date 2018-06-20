@@ -1,4 +1,6 @@
 import pygame
+import random
+import math
 
 # -- Global constants
 
@@ -18,68 +20,76 @@ size = (640,480)
 screen = pygame.display.set_mode(size)
 
 # --title if window
-pygame.display.set_caption("Pong")
-# -- exit game flag
+pygame.display.set_caption("Snow")
+
+## -- define the class snow which is a sprit
+class Snow(pygame.sprite.Sprite):
+    # Define the constructor for snow
+    def __init__(self, color, width, height):
+         # Call the sprite constructor
+         super().__init__()
+         # Create a sprite and fill it with colour
+         self.image = pygame.Surface([width,height])
+         self.image.fill(color)
+         # Set the position of the sprite
+         self.rect = self.image.get_rect()
+         self.rect.x = random.randrange(0, 600)
+         self.rect.y = random.randrange(0, 400)
+    #End procedure
+#End Class
+         #-- exit game flag
 done = False
-sun_x = 40
-sun_y = 100
+
+# Create a list if the snow blocks
+
+snow_group = pygame.sprite.Group()
+
+# create a list of all sprites
+
+all_sprites_group = pygame.sprite.Group()
+
 # -- manages how fast screen refreshes
+
 clock = pygame.time.Clock()
 
+# create the snowflakes
 
-ball_width = 20
-x_val = 150
-y_val = 200
-x_direction = 1
-y_direction = 1
-x_padd = 0
-y_padd = 220
+number_of_flakes = 50 # we are creating 50 snowflakes
+
+for x in range (number_of_flakes):
+
+    my_snow = Snow(WHITE, 5, 5) # snowflakes are white with size 5 by 5 px
+
+    snow_group.add (my_snow) # adds the new snowflake to the group of snowflakes
+
+    all_sprites_group.add (my_snow) # adds it to the group of all Sprites
+
+#Next x
+
 ### -- Game Loop
 while not done:
-    # -- User input and controls
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP]:
-            y_padd = y_padd - 1
-    if keys[pygame.K_DOWN]:
-            y_padd = y_padd + 1
+
+
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = true
             #End if
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    # - write logic that happens when you press the key
-                    y_padd = y_padd - 20
-
-                elif event.key == pygame.K_DOWN:
-                    # - write logic that happens on key press here
-
-                    y_padd = y_padd + 20    
-                    #END If
-                        
-                #END If
-            #Next event
+    #Next event
 
     # -- Game logic goes after this comment
-    x_val = x_val + x_direction
-    y_val = y_val + y_direction
-    sun_x = sun_x + 5
-    if x_val == 620: x_direction = x_direction * -1
-    if y_val == 460: y_direction = y_direction * -1
-    if x_val == 0: x_direction = x_direction * -1
-    if y_val == 0: y_direction = y_direction * -1
+
     # -- screen background is black
 
-    #condition to hit paddle
-    if x_val < 15 and y_val > y_padd and y_val < y_padd + 65:
-        x_direction = x_direction * -1
-    
     screen.fill(BLACK)
 
     # -- Draw here
+    # -  screen background is BLACK
+    screen.fill(BLACK)
+# - draw here
+    all_sprites_group.draw(screen)
+    # -- User input and controls
 
-    pygame.draw.rect(screen, BLUE, (x_val,y_val, ball_width,ball_width))
-    pygame.draw.rect(screen, WHITE, (x_padd,y_padd,15,60))
+   
 
     # -- flip display to reveal new positions of objects
 
@@ -87,12 +97,10 @@ while not done:
 
     # -- the clock ticks over
 
-    clock.tick(200)
+    clock.tick(60)
 
 #End while - end of game loop
 
 pygame.quit()
-
-
 
 
